@@ -5,6 +5,9 @@
 export const SI: Record<string, string> = {
   "Hide password": "මුරපදය සඟවන්න", "Show password": "මුරපදය පෙන්වන්න", "Water": "වතුර",
 
+  "Invoice": "ඉන්වොයිසිය", "Net Total": "ශුද්ධ එකතුව", "Amount Tendered": "ලැබුණු මුදල", "Balance / Change": "ඉතිරි මුදල",
+  "Bill tagline": "බිලේ කෙටි විස්තරය", "Printed under the shop name.": "කඩයේ නමට යටින් මුද්‍රණය වේ.",
+
   // Navigation
   "Dashboard": "මුල් පිටුව", "Home": "මුල", "Billing": "බිල්පත්", "Gas": "ගෑස්", "Gas & Water": "ගෑස් සහ වතුර",
   "Nayapotha": "ණය පොත", "Inventory": "තොග", "Reports": "වාර්තා", "Settings": "සැකසුම්", "More": "තවත්",

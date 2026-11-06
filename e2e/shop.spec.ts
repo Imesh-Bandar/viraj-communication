@@ -32,6 +32,7 @@ test("cash sale prints a bill and lowers stock", async ({ page }) => {
   await expect(page).toHaveURL(/receipt/);
   await expect(page.getByText("Blue Pen")).toBeVisible();
 
+  await page.locator("#receipt").screenshot({ path: "test-results/receipt.png" });
   // The bill prints at the top centre of the paper.
   await page.emulateMedia({ media: "print" });
   await page.setViewportSize({ width: 302, height: 600 });

@@ -76,6 +76,7 @@ export const gwStockSchema = z.object({
 
 export const settingsSchema = z.object({
   shopName: name("Shop name"),
+  tagline: z.string().trim().max(120).default(""),
   address: z.string().trim().max(200).default(""),
   phone: z.string().trim().max(40).default(""),
   currency: z.string().trim().min(1).max(6),

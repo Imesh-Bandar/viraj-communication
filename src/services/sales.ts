@@ -10,7 +10,7 @@ export type Method = "cash" | "card" | "credit";
 
 export type SaleLine = {
   itemId?: string; gwProductId?: string; gwAction?: "refill" | "sell_new";
-  name: string; qty: number; price: number; cost: number; total: number;
+  name: string; code?: string | null; qty: number; price: number; cost: number; total: number;
 };
 
 type CheckoutInput = {
@@ -30,7 +30,7 @@ export async function priceLines(lines: CheckoutInput["lines"]): Promise<SaleLin
       const item = await db.collection("items").findOne({ _id: toId(line.itemId), active: true });
       if (!item) throw new AppError("An item on this bill no longer exists.");
       return {
-        itemId: line.itemId, name: item.name, qty: line.qty, price: item.sellPrice,
+        itemId: line.itemId, name: item.name, code: item.barcode, qty: line.qty, price: item.sellPrice,
         cost: item.costPrice, total: round2(item.sellPrice * line.qty),
       };
     }

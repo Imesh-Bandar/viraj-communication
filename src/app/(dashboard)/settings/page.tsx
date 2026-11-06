@@ -59,6 +59,7 @@ function ShopForm() {
           </label>
         </div>
         <Input label={t("Shop name")} name="shopName" defaultValue={data.shopName} required />
+        <Input label={t("Bill tagline")} name="tagline" defaultValue={data.tagline} placeholder="Stationery, Litro Gas & Water Refill Center" hint={t("Printed under the shop name.")} />
         <Input label={t("Address")} name="address" defaultValue={data.address} />
         <div className="grid gap-4 sm:grid-cols-2">
           <Input label={t("Phone")} name="phone" defaultValue={data.phone} />

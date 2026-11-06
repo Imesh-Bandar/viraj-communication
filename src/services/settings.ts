@@ -1,7 +1,7 @@
 import { getDb } from "@/lib/db";
 
 export type ShopSettings = {
-  shopName: string; address: string; phone: string; currency: string;
+  shopName: string; tagline?: string; address: string; phone: string; currency: string;
   receiptFooter: string; receiptWidth: "58" | "80"; autoPrint: boolean; logo?: string | null;
 };
 
