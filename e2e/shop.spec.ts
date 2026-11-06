@@ -41,6 +41,7 @@ test("cash sale prints a bill and lowers stock", async ({ page }) => {
   const box = (await page.locator("#receipt").boundingBox())!;
   expect(Math.abs(box.x - (302 - box.x - box.width))).toBeLessThanOrEqual(2);
   await page.emulateMedia({ media: "screen" });
+  await page.setViewportSize({ width: 1280, height: 720 });
 
   await page.goto("/inventory");
   await expect(page.getByRole("row", { name: /Blue Pen/ })).toContainText("98 in stock");
