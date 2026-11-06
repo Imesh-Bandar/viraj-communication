@@ -7,12 +7,19 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # MongoDB refuses to start on the newest kernels used by ubuntu-latest.
+    runs-on: ubuntu-22.04
     timeout-minutes: 20
     env:
       SESSION_SECRET: ci-only-secret-ci-only-secret-12345
       E2E_MONGODB_URI: mongodb://127.0.0.1:27017
     steps:
+      - name: Start MongoDB
+        run: |
+          docker run -d --name mongo -p 27017:27017 mongo:7
+          for i in $(seq 1 30); do docker exec mongo mongosh --quiet --eval "db.runCommand({ping:1})" && exit 0; sleep 2; done
+          docker logs mongo
+          exit 1
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -23,12 +30,6 @@ jobs:
       - run: npx tsc --noEmit
       - run: npm run build
       - run: npx playwright install --with-deps chromium
-      - name: Start MongoDB
-        run: |
-          docker run -d --name mongo -p 27017:27017 mongo:8
-          for i in $(seq 1 30); do docker exec mongo mongosh --quiet --eval "db.runCommand({ping:1})" && exit 0; sleep 2; done
-          docker logs mongo
-          exit 1
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4
         if: failure()
