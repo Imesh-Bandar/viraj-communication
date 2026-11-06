@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+/* One accent colour for the whole app. Red, amber and green are kept for status only. */
+@theme {
+  --color-brand-50: #eef8f7;
+  --color-brand-100: #d5efec;
+  --color-brand-200: #aedfda;
+  --color-brand-300: #7dc9c3;
+  --color-brand-400: #46aaa4;
+  --color-brand-500: #2a8e89;
+  --color-brand-600: #1c7470;
+  --color-brand-700: #195d5b;
+  --color-brand-800: #174b4a;
+  --color-brand-900: #133e3e;
+  --font-sans: var(--font-figtree), var(--font-sinhala), "Iskoola Pota", system-ui, sans-serif;
+}
+
+body {
+  @apply bg-slate-50 font-sans text-slate-800 antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Sinhala letters need more height and size than Latin to stay easy to read. */
+html[lang="si"] body { line-height: 1.7; }
+html[lang="si"] .uppercase { text-transform: none; letter-spacing: 0; }
+html[lang="si"] .tracking-tight { letter-spacing: 0; }
+html[lang="si"] .text-xs { font-size: 0.8125rem; line-height: 1.5; }
+html[lang="si"] .text-sm { line-height: 1.6; }
+html[lang="si"] h1, html[lang="si"] h2 { line-height: 1.45; }
+
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-brand-500;
+}
+
+/* On phones each table row becomes a small card: label on the left, value on the right. */
+@media screen and (max-width: 639px) {
+  .responsive-table thead { display: none; }
+  .responsive-table, .responsive-table tbody, .responsive-table tr { display: block; }
+  .responsive-table tbody { border: 0; }
+  .responsive-table tr { padding-block: 0.5rem; }
+  .responsive-table td {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.25rem 0 !important;
+    text-align: right;
+  }
+  .responsive-table td::before {
+    content: attr(data-label);
+    flex-shrink: 0;
+    color: var(--color-slate-500);
+    font-weight: 400;
+    text-align: left;
+  }
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+  @page { margin: 0; }
+}
