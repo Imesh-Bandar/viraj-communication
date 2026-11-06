@@ -24,9 +24,9 @@ export default async function ReceiptPage({ params, searchParams }: Props) {
 
   return (
     <div className="flex min-h-screen flex-col items-center gap-4 bg-slate-100 py-6 print:block print:min-h-0 print:bg-white print:p-0">
-      <ReceiptActions autoPrint={print === "1" && shop.autoPrint} paperWidth={Number(shop.receiptWidth)} />
+      <ReceiptActions autoPrint={print === "1" && shop.autoPrint} />
 
-      {/* Thermal printers cannot print to the paper edge, so the bill is narrower than the roll and centred on it. */}
+      {/* No fixed page size: a forced small page gets centred in the middle of larger paper. The printer's own paper is used, with the bill at the top centre. */}
       <div
         id="receipt"
         className="mx-auto box-border bg-white px-1 py-3 font-mono leading-snug text-black shadow print:shadow-none"
