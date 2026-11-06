@@ -32,6 +32,16 @@ test("cash sale prints a bill and lowers stock", async ({ page }) => {
   await expect(page).toHaveURL(/receipt/);
   await expect(page.getByText("Blue Pen")).toBeVisible();
 
+  // The bill prints on 80 mm paper, centred, not on a full page.
+  await expect.poll(() => page.evaluate(() => document.getElementById("receipt-page")?.textContent)).toMatch(/size: 80mm \d+mm/);
+  const pdf = (await page.pdf({ preferCSSPageSize: true })).toString("latin1");
+  expect(pdf).toMatch(/MediaBox \[0 0 22[67]\.\d*/); // 80 mm in points
+  await page.emulateMedia({ media: "print" });
+  await page.setViewportSize({ width: 302, height: 600 });
+  const box = (await page.locator("#receipt").boundingBox())!;
+  expect(Math.abs(box.x - (302 - box.x - box.width))).toBeLessThanOrEqual(2);
+  await page.emulateMedia({ media: "screen" });
+
   await page.goto("/inventory");
   await expect(page.getByRole("row", { name: /Blue Pen/ })).toContainText("98 in stock");
 });

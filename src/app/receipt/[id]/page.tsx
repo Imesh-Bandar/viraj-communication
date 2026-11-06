@@ -23,11 +23,15 @@ export default async function ReceiptPage({ params, searchParams }: Props) {
   const amount = (value: number) => money(value, "").trim();
 
   return (
-    <div className="flex min-h-screen flex-col items-center gap-4 bg-slate-100 py-6 print:block print:bg-white print:p-0">
-      <style>{`@page { size: ${shop.receiptWidth}mm auto; margin: 0; }`}</style>
-      <ReceiptActions autoPrint={print === "1" && shop.autoPrint} />
+    <div className="flex min-h-screen flex-col items-center gap-4 bg-slate-100 py-6 print:block print:min-h-0 print:bg-white print:p-0">
+      <ReceiptActions autoPrint={print === "1" && shop.autoPrint} paperWidth={Number(shop.receiptWidth)} />
 
-      <div className="bg-white p-3 font-mono text-[12px] leading-snug text-black shadow print:shadow-none" style={{ width: `${shop.receiptWidth}mm` }}>
+      {/* Thermal printers cannot print to the paper edge, so the bill is narrower than the roll and centred on it. */}
+      <div
+        id="receipt"
+        className="mx-auto box-border bg-white px-1 py-3 font-mono leading-snug text-black shadow print:shadow-none"
+        style={{ width: `${shop.receiptWidth === "58" ? 48 : 72}mm`, fontSize: shop.receiptWidth === "58" ? 11 : 12 }}
+      >
         <div className="text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           {shop.logo && <img src={shop.logo} alt="" className="mx-auto mb-1 max-h-14" />}
